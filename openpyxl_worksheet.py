@@ -32,7 +32,45 @@ print("min_column",ws_customer_index.min_column)
 print("min_row",ws_customer_index.min_row )
 print("max_column",ws_customer_index.max_column)
 print("max_row",ws_customer_index.max_row )
+trade_detail={}
+a_detail_list=[]
+x_trade_id=0
+for x,trade_detail_range in enumerate(ws_trade_detail.iter_rows(min_col=1,max_col=trade_detail_col,min_row=9000,max_row=ws_trade_detail.max_row,values_only=True)):
 
+    
+    if x < 5 :
+        print ("\nx=",x)
+    
+        tr_id=trade_detail_range[1]
+        for y,a_detail in enumerate(trade_detail_range):
+            print(a_detail, end=", ")
+        
+        if tr_id != x_trade_id:
+            print("trid:",tr_id,x_trade_id,x_trade_id)
+        #trade_detail[a_detail[1]]=a_detail_list
+
+        """
+            a_detail_list=[]
+            a_detail_list["dateof_trade"]=a_detail[2]
+            a_detail_list["product_code"]=a_detail[3]
+            a_detail_list["subsctiption"]=a_detail[4]
+            a_detail_list["standard"]=a_detail[5]
+            a_detail_list["unit"]=a_detail[6]
+            a_detail_list["count"]=a_detail[7]
+            a_detail_list["unit_price"]=a_detail[8]
+            a_detail_list["sum"]=a_detail[9]
+            a_detail_list["tax"]=a_detail[10]
+           """
+        
+from dataclasses import dataclass
+
+@dataclass
+class Product:
+    weight:int = None
+    price:int = None
+
+apple = Product()
+apple.weight = 10
 
 shop={}
 shop_list=[]
@@ -65,31 +103,16 @@ for a_shop in shop_list:
         print("trade_idx=",x, "len=",len(trade_range))
         for y,a_trade in enumerate(trade_range):
             print ("y=",y,a_trade)
+            a_detail_list=detail_list[a_trade[1]]
 
-for x,trade_detail_range in enumerate(ws_trade_detail.iter_rows(min_col=1,max_col=trade_detail_col,min_row=9000,max_row=ws_trade_detail.max_row)):
-
-    
-    if x < 5 :
-        print ("\nx=",x)
-        for y,a_detail in enumerate(trade_detail_range):
-            print(a_detail.value, end=", ")
-        '''print("tr_id=",a_detail[1])
-        print("dateof trade=",a_detail[2])
-        print("product_code:",a_detail[3])
-        print("subsctiption:",a_detail[4])
-        print("standard:",a_detail[5])
-        print("unit:",a_detail[6])
-        print("count:",a_detail[7])
-        print("unit_price:",a_detail[8])
-        print("sum:",a_detail[9])
-        print("tax:",a_detail[10])
-        '''           
-from dataclasses import dataclass
-
-@dataclass
-class Product:
-    weight:int = None
-    price:int = None
-
-apple = Product()
-apple.weight = 10
+"""
+            a_detail_list["dateof_trade"]=a_detail[2]
+            a_detail_list["product_code"]=a_detail[3]
+            a_detail_list["subsctiption"]=a_detail[4]
+            a_detail_list["standard"]=a_detail[5]
+            a_detail_list["unit"]=a_detail[6]
+            a_detail_list["count"]=a_detail[7]
+            a_detail_list["unit_price"]=a_detail[8]
+            a_detail_list["sum"]=a_detail[9]
+            a_detail_list["tax"]=a_detail[10]
+"""
