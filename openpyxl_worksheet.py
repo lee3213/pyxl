@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 from openpyxl import Workbook
-
+import copy
 
 
         # data_only=True로 해줘야 수식이 아닌 값으로 받아온다. 
@@ -33,35 +33,57 @@ print("min_row",ws_customer_index.min_row )
 print("max_column",ws_customer_index.max_column)
 print("max_row",ws_customer_index.max_row )
 trade_detail={}
+detail_list=[]
 a_detail_list=[]
+
 x_trade_id=0
-for x,trade_detail_range in enumerate(ws_trade_detail.iter_rows(min_col=1,max_col=trade_detail_col,min_row=9000,max_row=ws_trade_detail.max_row,values_only=True)):
+detail_idx={}
+trade_detail_range_value=ws_trade_detail.iter_rows(min_col=1,max_col=trade_detail_col,min_row=9000,max_row=ws_trade_detail.max_row,values_only=True)
+for y,a_detail in enumerate(trade_detail_range_value):
+    
+    if y < 5:
+        print(str(a_detail), end=", ")
+    else:
+        break
+        
+for x,a_detail in enumerate(trade_detail_range_value):
 
     
     if x < 5 :
         print ("\nx=",x)
     
-        tr_id=trade_detail_range[1]
-        for y,a_detail in enumerate(trade_detail_range):
-            print(str(a_detail), end=", ")
+    tr_id=a_detail[0]
         
-        if tr_id != x_trade_id:
-            print("trid:",tr_id,x_trade_id,x_trade_id)
-        #trade_detail[a_detail[1]]=a_detail_list
+    if tr_id != x_trade_id:
+            print("trid:",tr_id,x,x_trade_id)
+            detail_list_copy=copy.deepcopy(detail_list)
+            detail_idx[tr_id]=detail_list_copy
+            x_trade_id=tr_id
 
-        """
-            a_detail_list=[]
-            a_detail_list["dateof_trade"]=a_detail[2]
-            a_detail_list["product_code"]=a_detail[3]
-            a_detail_list["subsctiption"]=a_detail[4]
-            a_detail_list["standard"]=a_detail[5]
-            a_detail_list["unit"]=a_detail[6]
-            a_detail_list["count"]=a_detail[7]
-            a_detail_list["unit_price"]=a_detail[8]
-            a_detail_list["sum"]=a_detail[9]
-            a_detail_list["tax"]=a_detail[10]
-           """
+        #trade_detail[a_detail[1]]=a_detail_list
+    detail_list.add(tr_id)
         
+    a_detail_list={}
+    a_detail_list["dateof_trade"]=a_detail[2]
+    a_detail_list["product_code"]=a_detail[3]
+    a_detail_list["subsctiption"]=a_detail[4]
+    a_detail_list["standard"]=a_detail[5]
+    a_detail_list["unit"]=a_detail[6]
+    a_detail_list["count"]=a_detail[7]
+    a_detail_list["unit_price"]=a_detail[8]
+    a_detail_list["sum"]=a_detail[9]
+    a_detail_list["tax"]=a_detail[10]
+    trade_detail[tr_id]=copy.deepcopy(a_detail_list)
+    a_detail_list.clear()
+
+for x,a_detail_id in enumerate(trade_detail):
+    if x < 5:
+        print(x,a_detail,trade_detail[a_detail_id],end="  ")
+    print("\n")
+for z,a_detail_idx in detail_idx:
+    if x < 5:
+        print(z,a_detail_idx)
+
 from dataclasses import dataclass
 
 @dataclass
