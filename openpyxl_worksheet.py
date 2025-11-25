@@ -43,7 +43,7 @@ for x,trade_detail_range in enumerate(ws_trade_detail.iter_rows(min_col=1,max_co
     
         tr_id=trade_detail_range[1]
         for y,a_detail in enumerate(trade_detail_range):
-            print(a_detail, end=", ")
+            print(str(a_detail), end=", ")
         
         if tr_id != x_trade_id:
             print("trid:",tr_id,x_trade_id,x_trade_id)
